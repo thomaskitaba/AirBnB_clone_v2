@@ -1,5 +1,4 @@
-#!/
--– Create Database
+-- Create Database
 CREATE DATABASE IF NOT EXISTS Ihbnb_dev_db
 -- Create new user
 CREATE USER hbnb_dev@localhost IDENTIFY BY hbnb_dev_pwd;
