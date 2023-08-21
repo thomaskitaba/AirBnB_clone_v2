@@ -60,6 +60,5 @@ class FileStorage:
     def delete(self, obj=None):
         if obj:
             obj_key = obj.to_dict()['__class__'] + '.' + obj.id
-            for key in self.__objects.keys():
-                if obj_key == key:
-                    del self.__objects[obj_key]
+            if obj_key in self.__objects.keys():
+                del self.__objects[obj_key]
