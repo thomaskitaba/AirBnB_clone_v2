@@ -78,6 +78,6 @@ class BaseModel:
         # dictionary['updated_at'] = self.updated_at.isoformat()
         # return dictionary
     def delete(self):
-    """ delete object from storage """
+        """ delete object from storage """
         from models import storage
         storage.delete(self)
