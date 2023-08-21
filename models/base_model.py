@@ -69,7 +69,7 @@ class BaseModel:
         temp['__class__'] = self.__class__.__name__
         return temp
 
-        # old code ----------------
+        # old code ---------------
         # dictionary = {}
         # dictionary.update(self.__dict__)
         # dictionary.update({'__class__':
