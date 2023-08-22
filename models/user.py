@@ -8,7 +8,7 @@ from models.base_model import BaseModel, Base
 
 
 class User(BaseModel, Base):
-    """This class defines a user by various attributes"""
+    """Define User class with its attributes"""
     __tablename__ = 'users'
     __tablename__ = 'users'
 
