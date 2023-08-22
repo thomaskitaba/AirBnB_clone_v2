@@ -81,7 +81,7 @@ class Place(BaseModel, Base):
     else:
         @property
         def amenities(self):
-            """Returns the amenities of this Place"""
+            """return aminities"""
             from models import storage
             amenities_of_place = []
             for value in storage.all(Amenity).values():
