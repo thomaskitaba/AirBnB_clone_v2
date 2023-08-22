@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Amenity Module for HBNB project """
+""" Define Amenity class"""
 import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
@@ -7,7 +7,7 @@ from models.base_model import BaseModel, Base
 
 
 class Amenity(BaseModel, Base):
-    """Represents an amenity data set."""
+    """Represents an amenity table."""
     __tablename__ = 'amenities'
     name = Column(
         String(128), nullable=False
