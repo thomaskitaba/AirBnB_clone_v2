@@ -5,8 +5,8 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel, Base
-from models.place import Place
-from models.review import Review
+from place import Place
+from review import Review
 
 
 class User(BaseModel, Base):
