@@ -44,7 +44,7 @@ class BaseModel:
         return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
 
     def delete(self):
-        """Deletes a secfic instance from the storage"""
+        """Deletes a specfic instance from the storage"""
         from models import storage
         storage.delete(self)
 
@@ -57,12 +57,12 @@ class BaseModel:
 
     def to_dict(self):
         """Convert Object into dict format"""
-        res = {}
+        temp = {}
         for key, value in self.__dict__.items():
             if key != '_sa_instance_state':
                 if isinstance(value, datetime):
-                    res[key] = value.isoformat()
+                    temp[key] = value.isoformat()
                 else:
-                    res[key] = value
-        res['__class__'] = self.__class__.__name__
-        return res
+                    temp[key] = value
+        temp['__class__'] = self.__class__.__name__
+        return (temp)

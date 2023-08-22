@@ -15,7 +15,7 @@ from models.review import Review
 
 
 class DBStorage:
-    """This class manages storage of hbnb models in a SQL database"""
+    """ manage storage on the database"""
     __engine = None
     __session = None
 
@@ -37,7 +37,9 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
+        """Returns a dictionary of models or objects
+            from the dbstorage
+        """
         objects = dict()
         all_classes = (User, State, City, Amenity, Place, Review)
         if cls is None:
