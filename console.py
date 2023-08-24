@@ -115,46 +115,53 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        ignored_attrs = ('id', 'created_at', 'updated_at', '__class__')
+        # step 1: initialize some variables
         class_name = ''
-        name_pattern = r'(?P<name>(?:[a-zA-Z]|_)(?:[a-zA-Z]|\d|_)*)'
-        class_match = re.match(name_pattern, args)
         obj_kwargs = {}
-        if class_match is not None:
-            class_name = class_match.group('name')
-            params_str = args[len(class_name):].strip()
-            params = params_str.split(' ')
-            str_pattern = r'(?P<t_str>"([^"]|\")*")'
-            float_pattern = r'(?P<t_float>[-+]?\d+\.\d+)'
-            int_pattern = r'(?P<t_int>[-+]?\d+)'
-            param_pattern = '{}=({}|{}|{})'.format(
-                name_pattern,
-                str_pattern,
-                float_pattern,
-                int_pattern
-            )
-            for param in params:
-                param_match = re.fullmatch(param_pattern, param)
-                if param_match is not None:
-                    key_name = param_match.group('name')
-                    str_v = param_match.group('t_str')
-                    float_v = param_match.group('t_float')
-                    int_v = param_match.group('t_int')
-                    if float_v is not None:
-                        obj_kwargs[key_name] = float(float_v)
-                    if int_v is not None:
-                        obj_kwargs[key_name] = int(int_v)
-                    if str_v is not None:
-                        obj_kwargs[key_name] = str_v[1:-1].replace('_', ' ')
-        else:
-            class_name = args
-        if not class_name:
+        ignored_attrs = ('id', 'created_at', 'updated_at', '__class__')
+        name_pattern = r'(?P<name>([a-zA-Z]|_)([a-zA-Z]|\d|_)*)'
+        # step 2: check if class provided
+        class_found = re.match(name_pattern, args)
+        if class_found:
+            # step 1: split the args apropriately
+            class_name = re.match(class_found, 'name')
+            param_string = args[len(class_name):].strip()
+            parameters = param_string.split(' ')
+
+            str_ptrn = r'(?P<str_val>("[^"]|\")*")'
+            int_ptrn = r'(?P<int_val>([-+]?[0-9]+))'
+            float_ptrn = r'(?P<float_val>([-+]?[0-9]+\.[0-9]+))'
+
+            param_ptrn = f'{name_pattern}=({str_ptrn}|{int_ptrn}|{float_ptrn})'
+            #  loop across the splited args
+            for param in parameters:
+                #  param follows the expected format
+                # defined by the param_patrn
+                # in short check if it is key=value
+                param_match = re.fullmatch(param_ptrn, param)
+                if param_match:
+                    # step 2: check their type using pattern
+                    key = param_match('name')
+                    str_v = param_match('str_val')
+                    int_v = param_match('int_val')
+                    float_v = param_match('float_val')
+                    # step 3: insert into the appropriate key
+                    if str_v:
+                        obj_kwargs[key] = str_v[1:-1].replace('_', ' ')
+                    if int_v:
+                        obj_kwargs[key] = int(int_v)
+                    if float_v:
+                        obj_kwargs[key] = float(float_v)
+
+        # --------------- old provided -----------
+        if not args:
             print("** class name missing **")
             return
-        elif class_name not in HBNBCommand.classes:
+        elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        # check if its has database at the backend
+        if os.getenv(HBNB_TYPE_STORAGE) == 'db':
             if not hasattr(obj_kwargs, 'id'):
                 obj_kwargs['id'] = str(uuid.uuid4())
             if not hasattr(obj_kwargs, 'created_at'):
@@ -171,73 +178,6 @@ class HBNBCommand(cmd.Cmd):
                     setattr(new_instance, key, value)
             new_instance.save()
             print(new_instance.id)
-
-    # def do_create(self, args):
-    #     """ Create an object of any class"""
-    #     # step 1: initialize some variables
-    #     class_name = ''
-    #     obj_kwargs = {}
-    #     ignored_attrs = ('id', 'created_at', 'updated_at', '__class__')
-    #     name_pattern = r'(?P<name>([a-zA-Z]|_)([a-zA-Z]|\d|_)*)'
-    #     # step 2: check if class provided
-    #     class_found = re.match(name_pattern, args)
-    #     if class_found:
-    #         # step 1: split the args apropriately
-    #         class_name = re.match(class_found, 'name')
-    #         param_string = args[len(class_name):].strip()
-    #         parameters = param_string.split(' ')
-
-    #         str_ptrn = r'(?P<str_val>("[^"]|\")*")'
-    #         int_ptrn = r'(?P<int_val>([-+]?[0-9]+))'
-    #         float_ptrn = r'(?P<float_val>([-+]?[0-9]+\.[0-9]+))'
-
-    #         param_ptrn = f'{name_pattern}=
-    # ({str_ptrn}|{int_ptrn}|{float_ptrn})'
-    #         #  loop across the splited args
-    #         for param in parameters:
-    #             #  param follows the expected format
-    #             # defined by the param_patrn
-    #             # in short check if it is key=value
-    #             param_match = re.fullmatch(param_ptrn, param)
-    #             if param_match:
-    #                 # step 2: check their type using pattern
-    #                 key = param_match('name')
-    #                 str_v = param_match('str_val')
-    #                 int_v = param_match('int_val')
-    #                 float_v = param_match('float_val')
-    #                 # step 3: insert into the appropriate key
-    #                 if str_v:
-    #                     obj_kwargs[key] = str_v[1:-1].replace('_', ' ')
-    #                 if int_v:
-    #                     obj_kwargs[key] = int(int_v)
-    #                 if float_v:
-    #                     obj_kwargs[key] = float(float_v)
-
-    #     # --------------- old provided -----------
-    #     if not args:
-    #         print("** class name missing **")
-    #         return
-    #     elif args not in HBNBCommand.classes:
-    #         print("** class doesn't exist **")
-    #         return
-    #     # check if its has database at the backend
-    #     if os.getenv(HBNB_TYPE_STORAGE) == 'db':
-    #         if not hasattr(obj_kwargs, 'id'):
-    #             obj_kwargs['id'] = str(uuid.uuid4())
-    #         if not hasattr(obj_kwargs, 'created_at'):
-    #             obj_kwargs['created_at'] = str(datetime.now())
-    #         if not hasattr(obj_kwargs, 'updated_at'):
-    #             obj_kwargs['updated_at'] = str(datetime.now())
-    #         new_instance = HBNBCommand.classes[class_name](**obj_kwargs)
-    #         new_instance.save()
-    #         print(new_instance.id)
-    #     else:
-    #         new_instance = HBNBCommand.classes[class_name]()
-    #         for key, value in obj_kwargs.items():
-    #             if key not in ignored_attrs:
-    #                 setattr(new_instance, key, value)
-    #         new_instance.save()
-    #         print(new_instance.id)
 
         # elif sys.argv
         # new_instance = HBNBCommand.classes[args]()
