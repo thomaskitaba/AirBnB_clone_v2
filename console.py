@@ -125,9 +125,7 @@ class HBNBCommand(cmd.Cmd):
         class_found = re.match(name_pattern, args)
         if class_found:
             # step 1: split the args apropriately
-            # class_name = re.match(class_found, 'name')
-            class_name = class_found.group('name')
-
+            class_name = class_found.group('name')  # Fix the typo here
             param_string = args[len(class_name):].strip()
             parameters = param_string.split(' ')
 
@@ -144,10 +142,10 @@ class HBNBCommand(cmd.Cmd):
                 param_match = re.fullmatch(param_ptrn, param)
                 if param_match:
                     # step 2: check their type using pattern
-                    key = param_match('name')
-                    str_v = param_match('str_val')
-                    int_v = param_match('int_val')
-                    float_v = param_match('float_val')
+                    key = param_match.group('name')
+                    str_v = param_match.group('str_val')
+                    int_v = param_match.group('int_val')
+                    float_v = param_match.group('float_val')
                     # step 3: insert into the appropriate key
                     if str_v:
                         obj_kwargs[key] = str_v[1:-1].replace('_', ' ')
