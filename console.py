@@ -175,7 +175,6 @@ class HBNBCommand(cmd.Cmd):
                     setattr(new_instance, key, value)
             new_instance.save()
             print(new_instance.id)
-
     # def do_create(self, args):
     #     """ Create an object of any class"""
     #     # step 1: initialize some variables
@@ -195,11 +194,11 @@ class HBNBCommand(cmd.Cmd):
     #         int_ptrn = r'(?P<int_val>([-+]?[0-9]+))'
     #         float_ptrn = r'(?P<float_val>([-+]?[0-9]+\.[0-9]+))'
 
-    #         # '{}=({}|{}|{})'
-    #         param_ptrn = f'{name_pattern}=({str_ptrn}|{int_ptrn}|{float_ptrn})'
+    #         param_ptrn = f'{name_pattern}=({str_ptrn
+    # int_ptrn}|{float_ptrn})'
     #         #  loop across the splited args
     #         for param in parameters:
-    #             # param follows the expected format
+    #             #  param follows the expected format
     #             # defined by the param_patrn
     #             # in short check if it is key=value
     #             param_match = re.fullmatch(param_ptrn, param)
