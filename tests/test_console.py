@@ -118,7 +118,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn('123', cout.getvalue())
             cursor.close()
             dbc.close()
-
+z
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') != 'db', 'DBStorage test')
     def test_db_count(self):
