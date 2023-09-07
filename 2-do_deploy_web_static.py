@@ -15,6 +15,9 @@ from fabric.api import put, run
 from os.path import exists
 
 
+env.hosts = ['34.229.69.114', '100.26.122.201']
+""" list of host ip address """
+
 def do_deploy(archive_path):
     if exists(archive_path) is False:
         return False
