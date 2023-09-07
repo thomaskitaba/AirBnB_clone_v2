@@ -25,5 +25,6 @@ def do_pack():
         archive_time = datetime.now().strftime("%Y%m%d%H%M%S")
         archive_name = "versions/web_static_" + archive_time + ".tgz"
         local(f"tar -czvf {arcive_name} web_static")
+        return archive_name
     except expected as e:
-        return Nonef
+        return None
