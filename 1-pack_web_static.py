@@ -23,14 +23,16 @@ def do_pack():
     if not isdir("versions"):
         local("mkdir -p versions")
     cur_time = datetime.now()
-    output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-        cur_time.year,
-        cur_time.month,
-        cur_time.day,
-        cur_time.hour,
-        cur_time.minute,
-        cur_time.second
-    )
+    archive_time = cur_time.strftime("%Y%m%d%H%M%S")
+    output = f"versions/web_static_{archive_time}.tgz"
+    # output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+    #     cur_time.year,
+    #     cur_time.month,
+    #     cur_time.day,
+    #     cur_time.hour,
+    #     cur_time.minute,
+    #     cur_time.second
+    # )
     try:
         local("tar -cvzf {} web_static".format(output))
     except Exception:
