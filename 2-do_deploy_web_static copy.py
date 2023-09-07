@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 """
 Write a Fabric script that generates a .tgz archive from the contents
 of the web_static folder of your AirBnB Clone repo, using the function do_pack.
@@ -20,27 +20,39 @@ env.hosts = ['34.229.69.114', '100.26.122.201']
 
 
 def do_deploy(archive_path):
-    """Deploys the static files to the host servers.
-    Args:
-        archive_path (str): The path to the archived static files.
-    """
-    if not os.path.exists(archive_path):
+    if exists(archive_path) is False:
         return False
-    file_name = os.path.basename(archive_path)
-    folder_name = file_name.replace(".tgz", "")
-    folder_path = "/data/web_static/releases/{}/".format(folder_name)
     success = False
     try:
-        put(archive_path, "/tmp/{}".format(file_name))
-        run("mkdir -p {}".format(folder_path))
-        run("tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
-        run("rm -rf /tmp/{}".format(file_name))
-        run("mv {}web_static/* {}".format(folder_path, folder_path))
-        run("rm -rf {}web_static".format(folder_path))
+        # archive_path = versions/filename.tgz
+        f_name_all = archive_path.split('/')[-1]
+        f_name_only = f_name_all.split('.')[0]
+        path = "/data/web_static/releases/"
+        # Upload the archive to the /tmp/ directory of the web server
+        # syntax put(local_path, remote_path)
+        put(archive_path, f"/temp/{f_name_only}")
+        # Uncompress the archive to the folder
+        # # create folder with name the same as the archive name
+        run(f"mkdir -p {path}{f_name_only}")
+        # /data/web_static/releases/<archive filename without extension>
+        # on the web server
+        run(f"tar -xzvf /temp/{f_name_all} -C {path}{f_name_only}")
+        # Delete the archive from the web server
+        run("rm -rf /temp/{f_name_all}")
+
+        run("mv {}{}web_static/* {}".format(path, f_name_only, path))
+        # Delete the symbolic link /data/web_static/current from
+        # the web server
+        run("rm -rf {}web_static".format(path))
+
         run("rm -rf /data/web_static/current")
-        run("ln -s {} /data/web_static/current".format(folder_path))
-        print('New version deployed on servers!')
-        success = True
+        # Create a new the symbolic link /data/web_static/current on
+        # the web server, linked to the new version of your code
+        run(f"ln -sf /data/web_static/current  path{f_name_only}")
+
+        # (/data/web_static/releases/<archive
+        # filename without extension>)
+
     except Exception:
         success = False
     return success
