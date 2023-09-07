@@ -14,28 +14,35 @@ archive has been correctly generated. Otherwise, it should return None
 from fabric.api import put, run
 from os.path import exists
 
+
 def do_deploy(archive_path):
     if exists(archive_path) is False:
         return False
     try:
         # archive_path = versions/filename.tgz
-        file_name_with_ext = archive_path.split('/')[-1]
-        file_name_without_ext = file_name_with_ext.split('.')[0]
+        f_name_all = archive_path.split('/')[-1]
+        f_name_only = f_name_all.split('.')[0]
         path = "/data/web_static/releases/"
         # Upload the archive to the /tmp/ directory of the web server
         # syntax put(local_path, remote_path)
         put(archive_path, "/temp/")   # TODO: archive path or file
         # Uncompress the archive to the folder
         # # create folder with name the same as the archive name
-        run(f"mkdir -p {path}{file_name_without_ext}/")
-        # /data/web_static/releases/<archive filename without extension> on the web server
-        run(f"tar -xzvf /temp/{file_name_with_ext} {path}{file_name_without_ext}")
+        run(f"mkdir -p {path}{f_name_only}/")
+        # /data/web_static/releases/<archive filename without extension>
+        # on the web server
+        run(f"tar -xzvf /temp/{f_name_all} {path}{f_name_only}")
         # Delete the archive from the web server
-        run("rm -rf /temp/{file_name_with_ext}")
-        # Delete the symbolic link /data/web_static/current from the web server
+        run("rm -rf /temp/{f_name_all}")
+        # Delete the symbolic link /data/web_static/current from
+        # the web server
         run("rm -rf ")
-        # Create a new the symbolic link /data/web_static/current on the web server,
-        # linked to the new version of your code (/data/web_static/releases/<archive
+        # Create a new the symbolic link /data/web_static/current on
+        # the web server,
+
+        # linked to the new version of your code
+        # (/data/web_static/releases/<archive
+
         # filename without extension>)
-    except:
+    except Exception:
         return False
