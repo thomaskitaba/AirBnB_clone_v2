@@ -18,6 +18,7 @@ from os.path import exists
 env.hosts = ['34.229.69.114', '100.26.122.201']
 """ list of host ip address """
 
+
 def do_deploy(archive_path):
     if exists(archive_path) is False:
         return False
@@ -29,17 +30,21 @@ def do_deploy(archive_path):
         path = "/data/web_static/releases/"
         # Upload the archive to the /tmp/ directory of the web server
         # syntax put(local_path, remote_path)
-        put(archive_path, "/temp/")   # TODO: archive path or file
+        put(archive_path, f"/temp/{f_name_only}")
         # Uncompress the archive to the folder
         # # create folder with name the same as the archive name
-        run(f"mkdir -p {path}{f_name_only}/")
+        run(f"mkdir -p {path}{f_name_only}")
         # /data/web_static/releases/<archive filename without extension>
         # on the web server
-        run(f"tar -xzvf /temp/{f_name_all} {path}{f_name_only}")
+        run(f"tar -xzvf /temp/{f_name_all} -C {path}{f_name_only}")
         # Delete the archive from the web server
         run("rm -rf /temp/{f_name_all}")
+
+        run("mv {}{}web_static/* {}".format(path, f_name_only, path))
         # Delete the symbolic link /data/web_static/current from
         # the web server
+        run("rm -rf {}web_static".format(path))
+
         run("rm -rf /data/web_static/current")
         # Create a new the symbolic link /data/web_static/current on
         # the web server, linked to the new version of your code
