@@ -24,17 +24,10 @@ def do_pack():
         local("mkdir -p versions")
     cur_time = datetime.now()
     archive_time = cur_time.strftime("%Y%m%d%H%M%S")
-    output = f"versions/web_static_{archive_time}.tgz"
-    # output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-    #     cur_time.year,
-    #     cur_time.month,
-    #     cur_time.day,
-    #     cur_time.hour,
-    #     cur_time.minute,
-    #     cur_time.second
-    # )
+    archive_name = f"versions/web_static_{archive_time}.tgz"
+
     try:
-        local("tar -cvzf {} web_static".format(output))
+        local("tar -cvzf {} web_static".format(archive_name))
     except Exception:
         output = None
     return output
