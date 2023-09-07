@@ -11,8 +11,26 @@ web_static_<year><month><day><hour><minute><second>.tgz
 The function do_pack must return the archive path if the
 archive has been correctly generated. Otherwise, it should return None
 """
-from fabric.api import put, run
-from os.path import exists
+import os
+from datetime import datetime
+from fabric.api import local
+from os.path import isdir
+from os import exitsts
+
+
+def do_pack():
+    """Archives the static files."""
+    if not isdir("versions"):
+        local("mkdir -p versions")
+    cur_time = datetime.now()
+    archive_time = cur_time.strftime("%Y%m%d%H%M%S")
+    archive_name = f"versions/web_static_{archive_time}.tgz"
+
+    try:
+        local("tar -cvzf {} web_static".format(archive_name))
+    except Exception:
+        archive_name = None
+    return archive_name
 
 
 env.hosts = ['34.229.69.114', '100.26.122.201']
