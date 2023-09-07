@@ -31,9 +31,7 @@ def do_pack():
         cur_time.second
     )
     try:
-        print("Packing web_static to {}".format(output))
         local("tar -cvzf {} web_static".format(output))
-
     except Exception:
         output = None
     return output
