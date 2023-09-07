@@ -17,7 +17,7 @@ from fabric.api import local, runs_once
 from os.path import isdir
 import os
 
-
+@runs_once
 def do_pack():
     if not isdir("versions"):
         os.mkdir("versions")
