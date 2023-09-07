@@ -19,7 +19,7 @@ from fabric.api import env, local, put, run, runs_once
 env.hosts = ["34.229.69.114", "100.26.122.201"]
 """ list of host ip address """
 
-
+@runs_once
 def do_pack():
     """Archives the static files."""
     if not isdir("versions"):
