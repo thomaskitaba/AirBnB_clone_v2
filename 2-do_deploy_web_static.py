@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 Write a Fabric script that generates a .tgz archive from the contents
-of the web_static folder of your AirBnB Clone repo, using the function do_pack.
+of the web_static folder of your AirBnB Clone repo, using the
+function do_pack.
 Prototype: def do_pack():
 All files in the folder web_static must be added to the final archive
 All archives must be stored in the folder versions (your function
@@ -19,26 +20,35 @@ from fabric.api import env, local, put, run, runs_once
 env.hosts = ["34.229.69.114", "100.26.122.201"]
 """ list of host ip address """
 
+
 @runs_once
 def do_pack():
     """Archives the static files."""
-    if not isdir("versions"):
-        local("mkdir -p versions")
+    if not os.path.isdir("versions"):
+        os.mkdir("versions")
     cur_time = datetime.now()
-    archive_time = cur_time.strftime("%Y%m%d%H%M%S")
-    archive_name = f"versions/web_static_{archive_time}.tgz"
-
+    output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+        cur_time.year,
+        cur_time.month,
+        cur_time.day,
+        cur_time.hour,
+        cur_time.minute,
+        cur_time.second
+    )
     try:
-        local("tar -cvzf {} web_static".format(archive_name))
+        print("Packing web_static to {}".format(output))
+        local("tar -cvzf {} web_static".format(output))
+        archive_size = os.stat(output).st_size
+        print("web_static packed: {} -> {} Bytes".format(output, archive_size))
     except Exception:
-        archive_name = None
-    return archive_name
+        output = None
+    return output
 
 
 def do_deploy(archive_path):
-    """
-    Bash script that sets up your web servers for
-    the deployment of web_static.
+    """Deploys the static files to the host servers.
+    Args:
+        archive_path (str): The path to the archived static files.
     """
     if not os.path.exists(archive_path):
         return False
