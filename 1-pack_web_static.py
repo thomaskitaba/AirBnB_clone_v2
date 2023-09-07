@@ -20,7 +20,7 @@ from fabric.api import local, runs_once
 def do_pack():
     """Archives the static files."""
     if not os.path.isdir("versions"):
-        os.mkdir("versions")
+        local("mkdir -p versions")
     cur_time = datetime.now()
     output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
         cur_time.year,
@@ -33,8 +33,7 @@ def do_pack():
     try:
         print("Packing web_static to {}".format(output))
         local("tar -cvzf {} web_static".format(output))
-        archize_size = os.stat(output).st_size
-        print("web_static packed: {} -> {} Bytes".format(output, archize_size))
+
     except Exception:
         output = None
     return output
