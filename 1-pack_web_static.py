@@ -18,13 +18,15 @@ from os.path import isdir
 
 
 def do_pack():
-    archive_name = ""
     try:
-        if not isdir(versions):
-            local("mkdir versions")
+        if not isdir("versions"):
+            local("mkdir -p versions")
+
         archive_time = datetime.now().strftime("%Y%m%d%H%M%S")
         archive_name = "versions/web_static_" + archive_time + ".tgz"
-        local(f"tar -czvf {arcive_name} web_static")
+
+        local(f"tar -czvf {archive_name} web_static")
+
         return archive_name
-    except expected as e:
+    except Exception as e:
         return None
