@@ -18,6 +18,7 @@ from os.path import exists
 def do_deploy(archive_path):
     if exists(archive_path) is False:
         return False
+    success = False
     try:
         # archive_path = versions/filename.tgz
         f_name_all = archive_path.split('/')[-1]
@@ -36,13 +37,14 @@ def do_deploy(archive_path):
         run("rm -rf /temp/{f_name_all}")
         # Delete the symbolic link /data/web_static/current from
         # the web server
-        run("rm -rf ")
+        run("rm -rf /data/web_static/current")
         # Create a new the symbolic link /data/web_static/current on
-        # the web server,
+        # the web server, linked to the new version of your code
+        run(f"ln -sf /data/web_static/current  path{f_name_only}")
 
-        # linked to the new version of your code
         # (/data/web_static/releases/<archive
-
         # filename without extension>)
+
     except Exception:
-        return False
+        success = False
+    return success
