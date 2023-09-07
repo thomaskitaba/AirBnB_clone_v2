@@ -18,6 +18,11 @@ from os.path import isdir
 from os import exitsts
 
 
+
+env.hosts = ['34.229.69.114', '100.26.122.201']
+""" list of host ip address """
+
+
 def do_pack():
     """Archives the static files."""
     if not isdir("versions"):
@@ -31,10 +36,6 @@ def do_pack():
     except Exception:
         archive_name = None
     return archive_name
-
-
-env.hosts = ['34.229.69.114', '100.26.122.201']
-""" list of host ip address """
 
 
 def do_deploy(archive_path):
