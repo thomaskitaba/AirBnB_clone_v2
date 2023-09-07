@@ -17,7 +17,7 @@ from fabric.api import env
 from fabric.api import put
 from fabric.api import run
 
-env.hosts = ['34.229.69.114', '100.26.122.201']
+env.hosts = ["34.229.69.114", "100.26.122.201"]
 """ list of host ip address """
 
 
