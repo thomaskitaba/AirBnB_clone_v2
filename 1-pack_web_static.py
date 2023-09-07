@@ -14,12 +14,12 @@ archive has been correctly generated. Otherwise, it should return None
 """
 import os
 from datetime import datetime
-from fabric.api import local, runs_once
-
+from fabric.api import local
+from os.path import isdir
 
 def do_pack():
     """Archives the static files."""
-    if not os.path.isdir("versions"):
+    if not isdir("versions"):
         local("mkdir -p versions")
     cur_time = datetime.now()
     output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
