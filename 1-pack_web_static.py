@@ -13,13 +13,15 @@ The function do_pack must return the archive path if the
 archive has been correctly generated. Otherwise, it should return None
 """
 from datetime import datetime
-from fabric.api import local
+from fabric.api import local, runs_once
 from os.path import isdir
+import os
 
 
 def do_pack():
     if not isdir("versions"):
-        local("mkdir -p versions")
+        os.mkdir("versions")
+        # local("mkdir -p versions")
     now = datetime.now()
     archive_time = now.strftime("%Y%m%d%H%M%S")
     archive_name = f"versions/web_static_{archive_time}.tgz"
