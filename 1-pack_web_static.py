@@ -19,9 +19,10 @@ from os.path import isdir
 
 def do_pack():
     if not isdir("versions"):
-            local("mkdir -p versions")
-    archive_time = datetime.now().strftime("%Y%m%d%H%M%S")
-    archive_name = "versions/web_static_" + archive_time + ".tgz"
+        local("mkdir -p versions")
+    now = datetime.now()
+    archive_time = now.strftime("%Y%m%d%H%M%S")
+    archive_name = f"versions/web_static_{archive_time}.tgz"
 
     try:
         local(f"tar -czvf {archive_name} web_static")
