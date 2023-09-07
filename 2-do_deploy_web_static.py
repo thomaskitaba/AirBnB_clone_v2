@@ -9,13 +9,11 @@ should create this folder if it doesn’t exist)
 The name of the archive created must be
 web_static_<year><month><day><hour><minute><second>.tgz
 The function do_pack must return the archive path if the
-archive has been correctly generated. Otherwise, it should return None
+archive
 """
-from fabric.api import put, run, local
-from os.path import exists
 import os
 from datetime import datetime
-from os.path import isdir
+from fabric.api import env, local, put, run, runs_once
 
 
 env.hosts = ["34.229.69.114", "100.26.122.201"]
@@ -38,7 +36,10 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-
+    """
+    Bash script that sets up your web servers for
+    the deployment of web_static.
+    """
     if not os.path.exists(archive_path):
         return False
     file_name = os.path.basename(archive_path)
@@ -59,41 +60,3 @@ def do_deploy(archive_path):
     except Exception:
         success = False
     return success
-# def do_deploy(archive_path):
-
-    # if exists(archive_path) is False:
-    #     return False
-    # success = False
-    # try:
-    #     # archive_path = versions/filename.tgz
-    #     f_name_all = archive_path.split('/')[-1]
-    #     f_name_only = f_name_all.split('.')[0]
-    #     path = "/data/web_static/releases/"
-    #     # Upload the archive to the /tmp/ directory of the web server
-    #     # syntax put(local_path, remote_path)
-    #     put(archive_path, f"/temp/{f_name_only}")
-    #     # Uncompress the archive to the folder
-    #     # # create folder with name the same as the archive name
-    #     run(f"mkdir -p {path}{f_name_only}")
-    #     # /data/web_static/releases/<archive filename without extension>
-    #     # on the web server
-    #     run(f"tar -xzvf /temp/{f_name_all} -C {path}{f_name_only}")
-    #     # Delete the archive from the web server
-    #     run("rm -rf /temp/{f_name_all}")
-
-    #     run("mv {}{}web_static/* {}".format(path, f_name_only, path))
-    #     # Delete the symbolic link /data/web_static/current from
-    #     # the web server
-    #     run("rm -rf {}web_static".format(path))
-
-    #     run("rm -rf /data/web_static/current")
-    #     # Create a new the symbolic link /data/web_static/current on
-    #     # the web server, linked to the new version of your code
-    #     run(f"ln -sf /data/web_static/current  path{f_name_only}")
-
-    #     # (/data/web_static/releases/<archive
-    #     # filename without extension>)
-
-    # except Exception:
-    #     success = False
-    # return success
