@@ -17,6 +17,7 @@ from datetime import datetime
 from fabric.api import local
 from os.path import isdir
 
+
 def do_pack():
     """Archives the static files."""
     if not isdir("versions"):
