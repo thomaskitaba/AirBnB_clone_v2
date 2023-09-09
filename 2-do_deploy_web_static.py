@@ -53,7 +53,7 @@ def do_deploy(archive_path):
         run("sudo mkdir -p {}".format(folder_path))
         run("sudo tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
         run("sudo rm -rf /tmp/{}".format(file_name))
-        run("sudo mv {}web_static/* {}".format(folder_path, folder_path))
+        run("sudo mv -f {}web_static/* {}".format(folder_path, folder_path))
         run("sudo chown -R ubuntu:ubuntu /data/web_static/releases/")
         run("sudo chmod 755 -R /data/web_static/releases/")
         run("sudo rm -rf {}web_static".format(folder_path))
