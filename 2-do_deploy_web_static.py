@@ -55,9 +55,9 @@ def do_deploy(archive_path):
         run("sudo rm -rf /tmp/{}".format(file_name))
         run("sudo chown -R ubuntu:ubuntu /data/web_static")
         run("sudo chmod 755 -R /data/web_static")
-        # run("sudo mv -f {}web_static/* {}".format(folder_path, folder_path))
-        run("sudo find {}web_static/* -mindepth 1 -maxdepth 1 -exec mv -f \
-            {{}} /data/web_static/releases/web_static_20230907052359/ ;")
+        run("sudo mv -f {}web_static/* {}".format(folder_path, folder_path))
+        # run("sudo find {}web_static/* -mindepth 1 -maxdepth 1 -exec mv -f \
+        #     {{}} /data/web_static/releases/web_static_20230907052359/ ;")
         run("sudo rm -rf {}web_static".format(folder_path))
         run("sudo rm -rf /data/web_static/current")
         run("sudo ln -s {} /data/web_static/current".format(folder_path))
