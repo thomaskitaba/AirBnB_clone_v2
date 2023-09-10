@@ -52,7 +52,8 @@ def do_deploy(archive_path):
         run_locally = os.getenv("run_locally", None)
         if run_locally is None:
             local(f"sudo mkdir -p {folder_path}")
-            local(f"sudo tar -xzf /tmp/{folder_name} -C {archive_path}")
+            # local(f"sudo tar -xzf /tmp/{folder_name} -C {archive_path}")
+            local (f"sudo -xzf {archive_path} -C {folder_path}")
             local(f"sudo rm -rfR /data/web_static/current")
             local(f"ln -s {folder_path} /data/web_static/current")
             os.environ['run_locally'] = "True"
