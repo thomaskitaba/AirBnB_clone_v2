@@ -49,6 +49,16 @@ def do_deploy(archive_path):
     folder_path = "/data/web_static/releases/{}/".format(folder_name)
     success = False
     try:
+        run_locally = os.getenv("run_locally", None)
+        if run_locally is None:
+            local("sudo mkdir -p {}".format(folder_path))
+            local("sudo tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
+            local("sudo rm -rf /data/web_static/current")
+            local("sudo rm -rfR /tmp/{}".format(file_name))
+            run("sudo ln -s {} /data/web_static/current".format(folder_path))
+            os.environ['run_locally'] = "True"
+            print('New version deployed locally!')
+
         put(archive_path, "/tmp/{}".format(file_name))
         run("sudo mkdir -p {}".format(folder_path))
         run("sudo tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
