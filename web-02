@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# loging to server 1
+ssh -i ~/.ssh/school ubuntu@100.26.122.201
+                      
