@@ -20,9 +20,6 @@ from fabric.api import env, local, put, run, runs_once
 env.hosts = ["34.229.69.114", "100.26.122.201"]
 """ list of host ip address """
 
-env.hosts = ["34.229.69.114", "100.26.122.201"]
-""" list of host ip address """
-
 
 @runs_once
 def do_pack():
@@ -52,16 +49,6 @@ def do_deploy(archive_path):
     folder_path = "/data/web_static/releases/{}/".format(folder_name)
     success = False
     try:
-        run_locally = os.getenv("run_locally", None)
-        if run_locally is None:
-            local(f"sudo mkdir -p {folder_path}")
-            # local(f"sudo tar -xzf /tmp/{folder_name} -C {archive_path}")
-            local(f"sudo tar -xzf {archive_path} -C {folder_path}")
-            local(f"sudo rm -rfR /data/web_static/current")
-            local(f"ln -s {folder_path} /data/web_static/current")
-            os.environ['run_locally'] = "True"
-            print('New version deployed locally!')
-
         put(archive_path, "/tmp/{}".format(file_name))
         run("sudo mkdir -p {}".format(folder_path))
         run("sudo tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
