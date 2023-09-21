@@ -26,10 +26,10 @@ def C(text):
     return f"C {text.replace('_', ' ')}"
 
 
-@app.route("/python/<text>", strict_slashed=False)
+@app.route("/python/<text>", strict_slashes=False)
 def python(text):
     """ diplay Python and text value """
-    return f"Python {text.replace('_'.' ')}"
+    return f"Python {text.replace('_', ' ')}"
 
 
 if __name__ == "__main__":
