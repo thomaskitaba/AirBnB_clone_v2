@@ -54,7 +54,7 @@ def number_odd_or_even(n):
     if n % 2 == 0:
         return f"<H1> Number: {n} is even</H1>"
     else:
-        return "<H1> Number: {n} is odd</H1>"
+        return f"<H1> Number: {n} is odd</H1>"
 
 
 if __name__ == "__main__":
