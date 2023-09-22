@@ -12,7 +12,7 @@ class State(BaseModel, Base):
     """ Define State class and its attributes"""
     __tablename__ = 'states'
 
-    # if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
+    # if storage_type == 'db'
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         name = Column(String(128), nullable=False)
         cities = relationship(
