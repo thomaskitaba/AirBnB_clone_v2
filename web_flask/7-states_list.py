@@ -18,5 +18,14 @@ def states_list():
     return ("8-cities_by_states.html", all_states=all_states)
 
 
+@app.teardown_appcontext
+def teardown_db(exception):
+  """closes the storage on teardown"""
+  storage.close()
+
+if __name__ == '__main__':
+  app.run(host='0.0.0.0', port='5000')
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host='0.0.0.0', port='5000')
