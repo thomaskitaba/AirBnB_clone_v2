@@ -23,7 +23,7 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            """Returns the cities in this State"""
+            """Returns the cities in this State if storage is not db"""
             from models import storage
             cities_in_state = []
             for value in storage.all(City).values():
