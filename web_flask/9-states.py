@@ -6,7 +6,6 @@ display the states and cities listed in alphabetical order
 
 from flask import Flask, render_template
 from models import *
-from models import storage
 app = Flask(__name__)
 
 
