@@ -53,10 +53,8 @@ def number_odd_or_even(n):
     """ display Number: n is even|odd in sided a h1 tag """
     a = "6-number_odd_or_even.html"
     if n % 2 == 0:
-
         return render_template(a, n=n, even_or_odd="even")
     else:
-
         return render_template(a, n=n, even_or_odd="odd")
 
 
