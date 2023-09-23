@@ -16,8 +16,7 @@ def states_list():
         ...
         ]
     """
-    #all_states = sorted(list(storage.all('State')), key=lambda x: x.name)
-    all_states = storage.all("State")
+    all_states = sorted(list(storage.all('State')), key=lambda x: x.name)
 
     return render_template("7-states_list.html", all_states=all_states)
 
