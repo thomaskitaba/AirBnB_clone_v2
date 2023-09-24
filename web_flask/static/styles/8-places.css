@@ -32,10 +32,10 @@ article {
 
 .headline {
 	display: flex;
-	flex-direction: row;
+
 	position: relative;
 
-	height: 80px;
+	height: max-content;
 	width: 100%;
 }
 
@@ -44,7 +44,7 @@ article {
 	justify-content: center;
 	align-self: flex-end;
 
-	position: absolute;
+
 	right: 0;
 
 	line-height: 60px;
@@ -90,8 +90,7 @@ article {
 h1 {
 	display: block;
 	text-align: left;
-	width: 95%;
-	display: block;
+	width: 75%;
 	margin-top: 0px;
 	margin-left: 20px;
 	margin-bottom: 5px;
