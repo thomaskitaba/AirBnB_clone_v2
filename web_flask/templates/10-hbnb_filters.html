@@ -1,9 +1,51 @@
 <!DOCTYPE html>
-<HTML lang="en">
-    <HEAD>
-        <TITLE>HBNB</TITLE>
-    </HEAD>
-    <BODY>
+<html lang="en">
+	<head>
+		<title>AirBnB clone</title>
 
-    </BODY>
-</HTML>
+		<link rel="shortcut icon" href="images/icon.png" >
+
+		<link rel="stylesheet" href="styles/4-common.css"/>
+		<link rel="stylesheet" href="styles/3-header.css"/>
+		<link rel="stylesheet" href="styles/3-footer.css"/>
+		<link rel="stylesheet" href="styles/6-filters.css"/>
+	</head>
+    <body>
+		<header>
+			<div id="header_logo"></div>
+		</header>
+		<div class="container">
+			<section class="filters">
+				<button>Search</button>
+				<div class="locations">
+					<h3>States</h3>
+					<h4>California, Arizona...</h4>
+					<UL>
+                        {% for state in states|sort(attribute='name') %}
+                            <LI>{{ state.id }}: <B>{{ state.name }}</B>
+                            <UL>
+                            {% for city in state.cities|sort(attribute='name') %}
+                                <LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
+                            {% endfor %}
+                            </UL>
+                        </LI>
+                        {% endfor %}
+                        </UL>
+				</div>
+				<div class="amenities">
+					<h3>Amenities</h3>
+					<h4>Internet, Kitchen...</h4>
+					<UL>
+                        {% for amenity in amenities|sort(attribute='name') %}
+                            <LI>{{ aminity.id }}: <B>{{ aminity.name }}</B> </LI>
+                        {% endfor %}
+                    </UL>
+				</div>
+
+			</section>
+		</div>
+		<footer>
+			<p>Holberton School</p>
+		</footer>
+	</body>
+</html>

@@ -39,7 +39,17 @@ app = Flask(__name__)
 
 @app.rout("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
-    
+    """ state and aminity filters """
+    amenities = storage.all('Amenity').value()
+    states = storage.all("State").values()
+    return render_template("10-hbnb_filters.html", amenities=amenities, states=states)
+
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    """closes the storage on teardown"""
+    storage.close()
+
 
 if __name__ == "__main__""
     app.run(host='0.0.0.0', port='5000')
