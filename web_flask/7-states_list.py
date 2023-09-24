@@ -5,7 +5,6 @@ from models import *
 from models import storage
 
 
-
 app = Flask(__name__)
 
 
