@@ -21,7 +21,7 @@ classes = {"Amenity": Amenity, "City": City,
 
 
 class DBStorage:
-    """mInitializes the SQL database storage""""
+    """interaacts with the MySQL database"""
     __engine = None
     __session = None
 
@@ -41,10 +41,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Returns a dictionary of models or objects
-            from the dbstorage
-            or query on the current database session
-        """
+        """query on the current database session"""
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -63,19 +60,19 @@ class DBStorage:
         self.__session.commit()
 
     def delete(self, obj=None):
-        """Removes an object from the storage database""""
+        """delete from the current database session obj if not None"""
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """Loads storage database"""
+        """reloads data from the database"""
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
     def close(self):
-        """Closes the storage engine."""
+        """call remove() method on the private session attribute"""
         self.__session.remove()
 
     def get(self, cls, id):
