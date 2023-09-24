@@ -7,7 +7,7 @@
 	border-radius: 4px;
 }
 
-.locations {
+.locations, .amenities {
 	display: inline;
 	vertical-align: middle;
 	float: left;
@@ -40,7 +40,7 @@
 
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
-    max-height: 300;
+    max-height: 300px;
 
     overflow-y: auto;
 
@@ -50,6 +50,9 @@
 	display: inline-block;
 }
 
+.amenities:hover .popover {
+    display: inline-block;
+}
 .filter_amenities:hover .popover {
 	display: inline-block;
 }
