@@ -29,6 +29,7 @@
 }
 
 .popover {
+    z-index: 111;
 	list-style-type: none;
 	display: none;
 	background-color: #FAFAFA;
@@ -42,7 +43,7 @@
 	border-radius: 4px;
     max-height: 300px;
 
-    overflow-y: auto;
+    overflow: auto;
 
 }
 
