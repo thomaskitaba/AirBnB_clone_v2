@@ -30,19 +30,18 @@ from flask import Flask, render_template
 from models import storage
 from models import *
 """
-
 from flask import Flask, render_template
-from models import storage
 from models import *
+from models import storage
 app = Flask(__name__)
 
 
-@app.rout("/hbnb_filters", strict_slashes=False)
+@app.route("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
-    """ state and aminity filters """
-    amenities = storage.all('Amenity').value()
+    """display the states and cities listed in alphabetical order"""
     states = storage.all("State").values()
-    return render_template("10-hbnb_filters.html", amenities=amenities, states=states)
+    amenities = storage.all("Amenity").values()
+    return render_template('10-hbnb_filters.html', states=states, amenities=amenities)
 
 
 @app.teardown_appcontext
@@ -51,5 +50,5 @@ def teardown_db(exception):
     storage.close()
 
 
-if __name__ == "__main__""
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
